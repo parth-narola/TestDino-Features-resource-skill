@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TestDino — All Features Resource</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --surface: #111318;
+    --surface2: #181c23;
+    --border: #1f2530;
+    --accent: #00e5a0;
+    --accent2: #00b3ff;
+    --accent3: #ff6b35;
+    --text: #e8edf5;
+    --muted: #6b7590;
+    --heading: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 56px 40px 40px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, #0a0c0f 0%, #0f1620 60%, #0a0c0f 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: -60px;
+    width: 340px; height: 340px;
+    background: radial-gradient(circle, rgba(0,229,160,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; right: -40px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(0,179,255,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0,229,160,0.1);
+    border: 1px solid rgba(0,229,160,0.2);
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+  }
+  .hero-badge::before { content: '●'; font-size: 7px; }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 800;
+    color: var(--heading);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .hero h1 span { color: var(--accent); }
+
+  .hero p {
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 560px;
+  }
+
+  /* Quick links bar */
+  .quick-links {
+    padding: 16px 40px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  .ql-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-right: 4px;
+  }
+  .ql-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--text);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.15s ease;
+  }
+  .ql-link:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(0,229,160,0.05);
+  }
+
+  /* Main content */
+  .container {
+    padding: 40px;
+    max-width: 1400px;
+  }
+
+  /* Section header */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 40px 0 20px;
+  }
+  .section-header:first-child { margin-top: 0; }
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Table */
+  .features-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+
+  .features-table thead tr {
+    background: var(--surface2);
+  }
+  .features-table thead th {
+    padding: 12px 16px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  .features-table thead th:not(:last-child) {
+    border-right: 1px solid var(--border);
+  }
+
+  .features-table tbody tr {
+    background: var(--surface);
+    transition: background 0.12s ease;
+  }
+  .features-table tbody tr:hover {
+    background: var(--surface2);
+  }
+  .features-table tbody tr:not(:last-child) td {
+    border-bottom: 1px solid var(--border);
+  }
+  .features-table tbody td {
+    padding: 13px 16px;
+    vertical-align: top;
+  }
+  .features-table tbody td:not(:last-child) {
+    border-right: 1px solid var(--border);
+  }
+
+  /* Sub-feature rows */
+  .features-table tbody tr.sub-row {
+    background: #0d1015;
+  }
+  .features-table tbody tr.sub-row:hover {
+    background: var(--surface);
+  }
+
+  /* Feature name */
+  .feat-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--heading);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.3;
+  }
+  .feat-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    background: rgba(0,229,160,0.08);
+    border: 1px solid rgba(0,229,160,0.15);
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+  .sub-row .feat-name { font-weight: 500; font-size: 12.5px; padding-left: 12px; }
+  .sub-row .feat-num {
+    color: var(--accent2);
+    background: rgba(0,179,255,0.08);
+    border-color: rgba(0,179,255,0.15);
+    font-size: 9px;
+  }
+
+  /* Description */
+  .feat-desc {
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.5;
+    max-width: 420px;
+  }
+
+  /* Links */
+  .links-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 90px;
+  }
+  .link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 5px;
+    border: 1px solid;
+    font-size: 11px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.12s ease;
+    white-space: nowrap;
+    width: fit-content;
+  }
+
+  .link-docs {
+    border-color: rgba(0,229,160,0.25);
+    color: var(--accent);
+    background: rgba(0,229,160,0.06);
+  }
+  .link-docs:hover {
+    border-color: var(--accent);
+    background: rgba(0,229,160,0.12);
+  }
+
+  .link-yt {
+    border-color: rgba(255,107,53,0.25);
+    color: var(--accent3);
+    background: rgba(255,107,53,0.06);
+  }
+  .link-yt:hover {
+    border-color: var(--accent3);
+    background: rgba(255,107,53,0.12);
+  }
+
+  .link-cl {
+    border-color: rgba(0,179,255,0.25);
+    color: var(--accent2);
+    background: rgba(0,179,255,0.06);
+  }
+  .link-cl:hover {
+    border-color: var(--accent2);
+    background: rgba(0,179,255,0.12);
+  }
+
+  .no-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #2a3040;
+    padding: 4px 0;
+  }
+
+  /* Icon svgs inline */
+  .ico { width: 12px; height: 12px; flex-shrink: 0; }
+
+  /* Footer */
+  .footer {
+    margin: 48px 40px 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: gap;
+    gap: 12px;
+  }
+  .footer-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .footer-links {
+    display: flex;
+    gap: 16px;
+  }
+  .footer-links a {
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.12s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+
+  /* Stats bar */
+  .stats-bar {
+    display: flex;
+    gap: 32px;
+    padding: 20px 40px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: 'DM Mono', monospace;
+  }
+
+  @media (max-width: 768px) {
+    .hero, .container, .quick-links, .stats-bar, .footer { padding-left: 20px; padding-right: 20px; }
+    .feat-desc { max-width: 200px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-badge">31 Features · Complete Reference</div>
+  <h1>🦕 TestDino<br><span>Feature Resource</span></h1>
+  <p>All features with documentation, YouTube videos, and changelog links in one place.</p>
+</div>
+
+<!-- Stats Bar -->
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num">31</div><div class="stat-label">Total Features</div></div>
+  <div class="stat"><div class="stat-num">6</div><div class="stat-label">YouTube Videos</div></div>
+  <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Doc Pages</div></div>
+  <div class="stat"><div class="stat-num">10</div><div class="stat-label">Integrations</div></div>
+</div>
+
+<!-- Quick Links -->
+<div class="quick-links">
+  <span class="ql-label">Quick Access →</span>
+  <a class="ql-link" href="https://docs.testdino.com" target="_blank">📖 Docs</a>
+  <a class="ql-link" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a>
+  <a class="ql-link" href="https://www.youtube.com/@testdinohq" target="_blank">▶️ YouTube</a>
+  <a class="ql-link" href="https://sandbox.testdino.com" target="_blank">🧪 Sandbox</a>
+  <a class="ql-link" href="https://app.testdino.com" target="_blank">🚀 App</a>
+  <a class="ql-link" href="https://discord.gg/hGY9kqSm58" target="_blank">💬 Discord</a>
+  <a class="ql-link" href="https://github.com/testdino-hq" target="_blank">⚙️ GitHub</a>
+</div>
+
+<!-- Main Content -->
+<div class="container">
+
+  <!-- Platform Core -->
+  <div class="section-header">
+    <span class="section-num">01–07</span>
+    <span class="section-title">Platform Core</span>
+    <div class="section-line"></div>
+  </div>
+
+  <table class="features-table">
+    <thead>
+      <tr>
+        <th style="width:220px">Feature</th>
+        <th>Description</th>
+        <th style="width:140px">Docs</th>
+        <th style="width:140px">YouTube</th>
+        <th style="width:140px">Changelog</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- 1 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">01</span>Getting Started</div></td>
+        <td><div class="feat-desc">Create org & project, generate API key, configure Playwright reporters, integrate CI/CD, upload first run.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/getting-started" target="_blank">📖 Overview</a><a class="link-btn link-docs" href="https://docs.testdino.com/guides/generate-api-keys" target="_blank">📖 API Keys</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 2 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">02</span>Dashboard</div></td>
+        <td><div class="feat-desc">Centralized test health view. Filters for period (7/14/30 days), environment, and branches.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/platform/dashboard/overview" target="_blank">📖 Overview</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">2a</span>QA Dashboard</div></td>
+        <td><div class="feat-desc">Team-wide monitoring — pass/fail, flaky identification, AI failure categories, cross-env comparison.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/platform/dashboard/qa" target="_blank">📖 QA Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">2b</span>Developer Dashboard</div></td>
+        <td><div class="feat-desc">PR readiness, blocking issues, flaky tests per author, branch health spotlight.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/platform/dashboard/developer" target="_blank">📖 Dev Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 3 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">03</span>Test Runs</div></td>
+        <td><div class="feat-desc">View, filter & debug every Playwright execution. Search by commit/run ID, 8 filter types, live progress, grouped rerun attempts.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/platform/test-runs/overview" target="_blank">📖 Overview</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">3a</span>Summary Tab</div></td>
+        <td><div class="feat-desc">Failure/flaky/skipped KPIs grouped by root cause. AI categories, history preview, trace viewer link.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/platform/test-runs/summary" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">3b</span>Specs & Tags Tab</div></td>
+        <td><div class="feat-desc">Results organized by spec file or tag. Sort by name/duration/status, filter by outcome.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/platform/test-runs/specs" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">3c</span>Errors Tab</div></td>
+        <td><div class="feat-desc">Groups failed & flaky tests by error message. Side panel shows error text, stack trace, and full details link.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/platform/test-runs/errors" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">3d</span>History Tab</div></td>
+        <td><div class="feat-desc">Outcome & duration trends across recent runs on same branch & CI environment.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/platform/test-runs/history" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">3e</span>Configuration Tab</div></td>
+        <td><div class="feat-desc">Source control, CI pipeline, system info (OS, CPU, Node.js), test config (browsers, workers, retries).</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/platform/test-runs/configuration" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">3f</span>Coverage Tab</div></td>
+        <td><div class="feat-desc">Code coverage metrics — statements, branches, functions, lines. Diff against baseline. Coverage badge (green/yellow/red).</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/platform/test-runs/coverage" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 4 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">04</span>Test Cases</div></td>
+        <td><div class="feat-desc">Individual test detail — KPI tiles, annotations, evidence (screenshots, video, trace, console, visual comparison).</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/platform/test-cases/overview" target="_blank">📖 Overview</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">4a</span>History Tab</div></td>
+        <td><div class="feat-desc">Stability % = (Passed / Total) × 100. Status tiles, execution history, expandable errors.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/platform/test-cases/history" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">4b</span>AI Insights (Test Case)</div></td>
+        <td><div class="feat-desc">AI category & confidence score, recommendations, code change links, quick fixes, user feedback loop.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/platform/test-cases/ai-insights" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 5 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">05</span>AI Insights (Global)</div></td>
+        <td><div class="feat-desc">Classifies failures: Actual Bug, UI Change, Unstable Test, Miscellaneous. Failure patterns, key metrics dashboard. Toggle per project.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/platform/ai-insights/overview" target="_blank">📖 Overview</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 6 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">06</span>Pull Requests</div></td>
+        <td><div class="feat-desc">PR-level test health — status badge, KPI tiles, AI-generated root cause summary, test results trend graph, timeline & files tabs.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/platform/pull-requests/overview" target="_blank">📖 Overview</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 7 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">07</span>Analytics</div></td>
+        <td><div class="feat-desc">Track failures, flakiness, execution times, and environments. Global filters: 7/14/30/60/90 days, environment, branches.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/platform/analytics/overview" target="_blank">📖 Overview</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">7a</span>Analytics — Summary</div></td>
+        <td><div class="feat-desc">Test run volume, flakiness %, new failures (regressions), retry trends.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/platform/analytics/summary" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">7b</span>Analytics — Test Run</div></td>
+        <td><div class="feat-desc">Average/fastest run times and performance by branch and day.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/platform/analytics/test-run" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">7c</span>Analytics — Test Case</div></td>
+        <td><div class="feat-desc">Individual test durations and reliability trends over time.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/platform/analytics/test-case" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">7d</span>Analytics — Errors</div></td>
+        <td><div class="feat-desc">Groups error messages by type to identify recurring problems.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/platform/analytics/errors" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">7e</span>Analytics — Coverage</div></td>
+        <td><div class="feat-desc">Statement, branch, function, line coverage trends over time.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/platform/analytics/coverage" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">7f</span>Analytics — Environment</div></td>
+        <td><div class="feat-desc">Env-specific failures, pass rates, branch/OS distribution, test run volume per environment.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/platform/analytics/environment" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Guides & Tools -->
+  <div class="section-header">
+    <span class="section-num">08–15</span>
+    <span class="section-title">Guides & Tools</span>
+    <div class="section-line"></div>
+  </div>
+
+  <table class="features-table">
+    <thead>
+      <tr>
+        <th style="width:220px">Feature</th>
+        <th>Description</th>
+        <th style="width:140px">Docs</th>
+        <th style="width:140px">YouTube</th>
+        <th style="width:140px">Changelog</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- 8 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">08</span>Real-Time Streaming <span style="font-size:10px;color:var(--accent2);font-family:'DM Mono',monospace;margin-left:4px">Beta</span></div></td>
+        <td><div class="feat-desc">Live Playwright results via WebSocket. Per-worker activity, sharded run support, multi-tab architecture with BroadcastChannel API.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/guides/real-time-streaming" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 9 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">09</span>Flaky Tests</div></td>
+        <td><div class="feat-desc">Auto-detection (single-run & multi-run), 5 flaky categories, Strict vs Neutral CI check modes. Stability = (Passed / Total) × 100.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/guides/flaky-tests" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 10 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">10</span>Automated Reports</div></td>
+        <td><div class="feat-desc">Scheduled PDF summaries via email. Daily/weekly/monthly, tag/env filters, preview before send. Includes executive summary, trends, branch stats.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/guides/automated-reports" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 11 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">11</span>Environment Mapping</div></td>
+        <td><div class="feat-desc">Map Git branches → Dev/Staging/Production. Exact match + regex patterns. Up to 10 envs per project. CLI override with <code style="font-size:11px;background:#1a2030;padding:1px 5px;border-radius:3px">--environment</code>.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/guides/environment-mapping" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><a class="link-btn link-yt" href="https://www.youtube.com/embed/oVaYPIsYrJA" target="_blank">▶️ Video</a></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 12 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">12</span>CI Optimization</div></td>
+        <td><div class="feat-desc">Rerun only failed tests. Uses <code style="font-size:11px;background:#1a2030;padding:1px 5px;border-radius:3px">tdpw cache</code> + <code style="font-size:11px;background:#1a2030;padding:1px 5px;border-radius:3px">tdpw last-failed</code>. Sharded support, auto-fallback to full suite.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/guides/ci-optimization/rerun-failed" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 13 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">13</span>GitHub Status Checks</div></td>
+        <td><div class="feat-desc">Quality gates on PRs. Configurable pass rate threshold (default 90%), mandatory tags, Strict/Neutral flaky handling, env overrides.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/guides/github-status-checks" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 15 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">15</span>MCP Server</div></td>
+        <td><div class="feat-desc">AI agents (Cursor, Claude Desktop) connect to TestDino. 12 tools for querying test runs, cases, manual tests. Requires Personal Access Token.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/mcp/overview" target="_blank">📖 Overview</a><a class="link-btn link-docs" href="https://docs.testdino.com/mcp/tools-reference" target="_blank">📖 Tools Ref</a><a class="link-btn link-docs" href="https://docs.testdino.com/mcp/troubleshooting" target="_blank">📖 Troubleshoot</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Integrations -->
+  <div class="section-header">
+    <span class="section-num">14</span>
+    <span class="section-title">Integrations</span>
+    <div class="section-line"></div>
+  </div>
+
+  <table class="features-table">
+    <thead>
+      <tr>
+        <th style="width:220px">Feature</th>
+        <th>Description</th>
+        <th style="width:140px">Docs</th>
+        <th style="width:140px">YouTube</th>
+        <th style="width:140px">Changelog</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">14</span>Integrations Overview</div></td>
+        <td><div class="feat-desc">Connect TestDino to engineering tools for automated test reporting, ticket creation, and quality enforcement.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/integrations/overview" target="_blank">📖 Overview</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">14a</span>GitHub</div></td>
+        <td><div class="feat-desc">AI summaries on commits/PRs. Auto-records test runs. CI Checks block merges. Install from GitHub Marketplace.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/integrations/ci-cd/github" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><a class="link-btn link-yt" href="https://www.youtube.com/embed/7DIwD68lqB4" target="_blank">▶️ Video</a></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">14b</span>GitLab</div></td>
+        <td><div class="feat-desc">AI summaries on merge requests & commits. MR sync, branch mapping per environment, Pull Requests dashboard.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/integrations/ci-cd/gitlab" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">14c</span>Azure DevOps</div></td>
+        <td><div class="feat-desc">Monitor test execution within Azure DevOps. Displays pass/fail/skipped/flaky counts, duration, branch. Install from VS Marketplace.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/integrations/ci-cd/azure-devops" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">14d</span>TeamCity</div></td>
+        <td><div class="feat-desc">Automates upload of Playwright reports from TeamCity. Bundles JSON/HTML/screenshots/videos/traces, posts run links in build logs.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/integrations/ci-cd/teamcity" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">14e</span>Jira</div></td>
+        <td><div class="feat-desc">Auto-create Jira tickets from failed tests with failure context, history, and TestDino links.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/integrations/issue-trackers/jira" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><a class="link-btn link-yt" href="https://www.youtube.com/embed/M7Hg4TpjOM8" target="_blank">▶️ Video</a></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">14f</span>Linear</div></td>
+        <td><div class="feat-desc">Auto-create Linear issues from failed tests. Configure default team in Project Settings → Integrations.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/integrations/issue-trackers/linear" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><a class="link-btn link-yt" href="https://www.youtube.com/embed/M7Hg4TpjOM8" target="_blank">▶️ Video</a></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">14g</span>Asana</div></td>
+        <td><div class="feat-desc">Auto-create Asana tasks from failed test cases with failure context and TestDino links.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/integrations/issue-trackers/asana" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">14h</span>monday.com</div></td>
+        <td><div class="feat-desc">Auto-create monday.com items from failed test cases with failure context and TestDino links.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/integrations/issue-trackers/monday" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">14i</span>Slack App</div></td>
+        <td><div class="feat-desc">Environment-based channel routing, annotation-driven alerts via <code style="font-size:11px;background:#1a2030;padding:1px 5px;border-radius:3px">testdino:notify-slack</code>. Pro+ plans.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/integrations/slack/app" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><a class="link-btn link-yt" href="https://www.youtube.com/embed/1OGY1AuIAPs" target="_blank">▶️ Video</a></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <tr class="sub-row">
+        <td><div class="feat-name"><span class="feat-num">14j</span>Slack Webhook</div></td>
+        <td><div class="feat-desc">Single-channel test run notifications with outcome, counts, duration, branch, author, commit, and link. Pro+ plans.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/integrations/slack/webhook" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><a class="link-btn link-yt" href="https://www.youtube.com/embed/1OGY1AuIAPs" target="_blank">▶️ Video</a></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Debug & Testing -->
+  <div class="section-header">
+    <span class="section-num">16–22</span>
+    <span class="section-title">Debug, Testing & Coverage</span>
+    <div class="section-line"></div>
+  </div>
+
+  <table class="features-table">
+    <thead>
+      <tr>
+        <th style="width:220px">Feature</th>
+        <th>Description</th>
+        <th style="width:140px">Docs</th>
+        <th style="width:140px">YouTube</th>
+        <th style="width:140px">Changelog</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- 16 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">16</span>Test Case Management</div></td>
+        <td><div class="feat-desc">Create & organize manual/automated cases. Suite hierarchy (6 levels), CSV/TestRail import/export, bulk ops, custom fields, attachments.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/test-management/overview" target="_blank">📖 Overview</a><a class="link-btn link-docs" href="https://docs.testdino.com/test-management/suites" target="_blank">📖 Suites</a><a class="link-btn link-docs" href="https://docs.testdino.com/test-management/import-export" target="_blank">📖 Import/Export</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 17 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">17</span>Annotations</div></td>
+        <td><div class="feat-desc">Attach metadata: priority (p0–p4), feature area, ticket links, owner, Slack notify, context notes, flaky reasons, custom performance metrics.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/guides/annotations" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 18 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">18</span>Visual Evidence</div></td>
+        <td><div class="feat-desc">Screenshots, video recording, visual comparison (Diff/Actual/Expected/Side-by-Side/Slider), console logs. Storage: 1GB–Enterprise.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/guides/debug-failures/visual-evidence" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 19 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">19</span>Trace Viewer</div></td>
+        <td><div class="feat-desc">Step through test execution. Panels: Actions, Call, Console, Network, Source, DOM Snapshot (Before/After). Requires <code style="font-size:11px;background:#1a2030;padding:1px 5px;border-radius:3px">--upload-full-json</code>.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/guides/debug-failures/trace-viewer" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 20 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">20</span>Error Grouping</div></td>
+        <td><div class="feat-desc">Groups failures by error message + AI root cause. 7 error categories + 4 AI categories with confidence scores. Create tickets from error groups.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/guides/debug-failures/error-grouping" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 21 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">21</span>Visual Testing</div></td>
+        <td><div class="feat-desc">Upload Playwright <code style="font-size:11px;background:#1a2030;padding:1px 5px;border-radius:3px">toHaveScreenshot()</code> diffs. Diff/Actual/Expected views. Update baselines with <code style="font-size:11px;background:#1a2030;padding:1px 5px;border-radius:3px">--update-snapshots</code>.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/guides/playwright-visual-testing" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 22 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">22</span>Code Coverage</div></td>
+        <td><div class="feat-desc">Tracks statements, branches, functions, lines. Merges across sharded runs. Babel/Vite/NYC instrumentation. No source code stored on server.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/guides/code-coverage" target="_blank">📖 Docs</a><a class="link-btn link-docs" href="https://docs.testdino.com/platform/analytics/coverage" target="_blank">📖 Analytics</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- CLI & Settings -->
+  <div class="section-header">
+    <span class="section-num">23–31</span>
+    <span class="section-title">CLI, Settings & Account</span>
+    <div class="section-line"></div>
+  </div>
+
+  <table class="features-table">
+    <thead>
+      <tr>
+        <th style="width:220px">Feature</th>
+        <th>Description</th>
+        <th style="width:140px">Docs</th>
+        <th style="width:140px">YouTube</th>
+        <th style="width:140px">Changelog</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- 23 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">23</span>GitHub Actions</div></td>
+        <td><div class="feat-desc">Upload Playwright results from GitHub Actions. Basic/HTML/full artifacts, environment tagging, sharded testing, smart reruns.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/guides/github-actions" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 24 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">24</span>Node.js CLI</div></td>
+        <td><div class="feat-desc">Install: <code style="font-size:11px;background:#1a2030;padding:1px 5px;border-radius:3px">npm install @testdino/playwright</code>. Commands: <code style="font-size:11px;background:#1a2030;padding:1px 5px;border-radius:3px">npx tdpw test/upload/cache/last-failed</code>. Real-time streaming reporter.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/cli/nodejs" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 25 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">25</span>Python CLI</div></td>
+        <td><div class="feat-desc">Install: <code style="font-size:11px;background:#1a2030;padding:1px 5px;border-radius:3px">pip install testdino</code>. Commands: <code style="font-size:11px;background:#1a2030;padding:1px 5px;border-radius:3px">testdino upload/cache/last-failed</code>. Supports GitHub Actions, GitLab CI, Jenkins.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/cli/python" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 26 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">26</span>Project Settings</div></td>
+        <td><div class="feat-desc">Central config hub: General, API Keys, Automated Reports, AI Toggles, Add-ons (SVG badges), Integrations, Branch Mapping, CLI Override.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/platform/project-settings" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><a class="link-btn link-yt" href="https://www.youtube.com/embed/2jUSi6EZEqw" target="_blank">▶️ CLI Demo</a></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 27 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">27</span>Users & Roles</div></td>
+        <td><div class="feat-desc">Roles: Owner (full), Admin (manage), Member (contribute), Viewer (read-only). Invite by email. Guest users (time-limited, plan-dependent).</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/platform/organizations/users-roles" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 28 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">28</span>Billing & Pricing</div></td>
+        <td><div class="feat-desc">Community (Free), Professional ($49/mo), Team ($99/mo), Enterprise (custom). Annual saves ~20%. 14-day trial for paid plans. Auto-Borrow, usage notifications.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/platform/billing-and-pricing" target="_blank">📖 Docs</a><a class="link-btn link-docs" href="https://docs.testdino.com/platform/billing-and-usage/test-limits" target="_blank">📖 Test Limits</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 29 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">29</span>Data Privacy</div></td>
+        <td><div class="feat-desc">Automatic sensitive data detection & removal. AI feature toggles per project. No test data sent to AI models when disabled.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/data-privacy" target="_blank">📖 Overview</a><a class="link-btn link-docs" href="https://docs.testdino.com/data-privacy/data-redaction" target="_blank">📖 Redaction</a><a class="link-btn link-docs" href="https://docs.testdino.com/data-privacy/data-retention" target="_blank">📖 Retention</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 30 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">30</span>API Keys</div></td>
+        <td><div class="feat-desc">Generate/rotate/revoke project API keys. Expiry 1–365 days. Key shown once only. Limits: Community 2, Pro 5, Team 10, Enterprise unlimited.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/guides/generate-api-keys" target="_blank">📖 Docs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+      <!-- 31 -->
+      <tr>
+        <td><div class="feat-name"><span class="feat-num">31</span>FAQs</div></td>
+        <td><div class="feat-desc">Frequently asked questions covering setup, uploads, AI insights, flakiness, integrations, billing, and troubleshooting.</div></td>
+        <td><div class="links-cell"><a class="link-btn link-docs" href="https://docs.testdino.com/faqs" target="_blank">📖 FAQs</a></div></td>
+        <td><div class="links-cell"><span class="no-link">— not available</span></div></td>
+        <td><div class="links-cell"><a class="link-btn link-cl" href="https://changelog.testdino.com" target="_blank">📣 Changelog</a></div></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <div class="footer-text">🦕 TestDino Feature Reference · Generated from testdino-features.md</div>
+  <div class="footer-links">
+    <a href="https://docs.testdino.com" target="_blank">Docs</a>
+    <a href="https://changelog.testdino.com" target="_blank">Changelog</a>
+    <a href="mailto:support@testdino.com">Support</a>
+    <a href="https://discord.gg/hGY9kqSm58" target="_blank">Discord</a>
+  </div>
+</div>
+
+</body>
+</html>
