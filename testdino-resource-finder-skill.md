@@ -20,6 +20,11 @@ You are a TestDino resource finder. When a user provides a feature name, keyword
 | YouTube Channel | https://www.youtube.com/@testdinohq | Video walkthroughs and demos |
 | YouTube RSS | https://www.youtube.com/feeds/videos.xml?channel_id=UCGhhRw7kf0hyx3XQjQRveNQ | Latest ~15 videos (newest uploads) |
 | YouTube Uploads Playlist | https://www.youtube.com/playlist?list=UUGhhRw7kf0hyx3XQjQRveNQ | ALL videos including older ones (UC→UU trick) |
+| YouTube Playlist 1 | https://youtube.com/playlist?list=PLz4CAYOYTC0EQAHYuGcaxSh_AEl8LDH5U | Categorized playlist |
+| YouTube Playlist 2 | https://youtube.com/playlist?list=PLz4CAYOYTC0E5ENwC1nygPsuNK21UvCiW | Categorized playlist |
+| YouTube Playlist 3 | https://youtube.com/playlist?list=PLz4CAYOYTC0HryojZghO2MQ-yC78nevCU | Categorized playlist |
+| YouTube Playlist 4 | https://youtube.com/playlist?list=PLz4CAYOYTC0H_wNtSSoHC0ohw7IULUhAi | Categorized playlist |
+| YouTube Playlist 5 | https://youtube.com/playlist?list=PLz4CAYOYTC0EzI-yErjTjErO62qpnUlFK | Categorized playlist |
 | Changelog | https://changelog.testdino.com | Feature release history |
 
 ---
@@ -125,7 +130,7 @@ Prompt: "List all video titles and video IDs that match or relate to: <feature_q
 ```
 Use `WebFetch` to retrieve this RSS feed. This catches any brand-new videos uploaded recently.
 
-**Layer 2 — Uploads Playlist (ALL videos, including older ones):**
+**Layer 2 — Uploads Playlist + Categorized Playlists (ALL videos, including older ones):**
 
 Every YouTube channel has an auto-generated "Uploads" playlist containing ALL videos (no limit). Get it by replacing `UC` with `UU` in the channel ID:
 ```
@@ -133,6 +138,16 @@ URL: https://www.youtube.com/playlist?list=UUGhhRw7kf0hyx3XQjQRveNQ
 Prompt: "List all video titles and video IDs that match or relate to: <feature_query>"
 ```
 Use `WebFetch` to retrieve the full uploads playlist page. This is the **primary source** for finding older videos that RSS doesn't include.
+
+Also search the **categorized playlists** — these are topic-organized and may give more targeted results:
+```
+https://youtube.com/playlist?list=PLz4CAYOYTC0EQAHYuGcaxSh_AEl8LDH5U
+https://youtube.com/playlist?list=PLz4CAYOYTC0E5ENwC1nygPsuNK21UvCiW
+https://youtube.com/playlist?list=PLz4CAYOYTC0HryojZghO2MQ-yC78nevCU
+https://youtube.com/playlist?list=PLz4CAYOYTC0H_wNtSSoHC0ohw7IULUhAi
+https://youtube.com/playlist?list=PLz4CAYOYTC0EzI-yErjTjErO62qpnUlFK
+```
+Use `WebFetch` on each playlist URL with the prompt: `"List all video titles and video IDs that match or relate to: <feature_query>"`
 
 > **How this works for ANY YouTube channel:**
 > - Channel ID format: `UCxxxxxxxxxxxxxxxxxxxxxx`
@@ -152,6 +167,10 @@ Query: site:youtube.com testdino <key_noun_1> <key_noun_2>
 ```
 
 **Merge & Deduplicate:** Combine results from all 3 layers. Remove duplicate video IDs. Prefer `watch?v=` URL format.
+
+**Layer 4 — Video Cache (if Layers 1-3 all fail or return no results):**
+
+If `WebFetch` cannot access youtube.com and `WebSearch` returns no relevant videos, fall back to the **YouTube Video Cache** section at the bottom of this document. Scan the cached video titles and feature areas for matches against the query.
 
 Collect all YouTube video URLs that belong to @testdinohq or mention "TestDino" / "testdino".
 
@@ -256,7 +275,11 @@ Based on the feature area classified in Step 2, automatically search for and inc
 2. Classify: Integrations area -> `/integrations/`
 3. Fetch `llms.txt` -> find Jira page URL
 4. WebSearch: `site:docs.testdino.com "Jira integration"` -> collect docs links
-5. WebSearch: `site:youtube.com "testdinohq" OR "testdino" Jira integration` -> collect video links
+5. YouTube 3-layer search:
+   - Layer 1: WebFetch RSS feed -> scan for "Jira" in titles
+   - Layer 2: WebFetch Uploads Playlist -> scan for "Jira" in titles
+   - Layer 3: WebSearch `site:youtube.com "testdinohq" Jira integration`
+   - If all layers fail -> check Video Cache -> find `ihDbH7p6h00` (Jira Integration)
 6. WebSearch: `site:changelog.testdino.com "Jira"` -> collect changelog links
 7. Verify all links
 8. Format and return
@@ -274,7 +297,7 @@ Based on the feature area classified in Step 2, automatically search for and inc
 ### YouTube Videos
 | # | Title | URL | Relevance |
 |---|-------|-----|-----------|
-| 1 | Jira/Linear Issues Integration | https://www.youtube.com/watch?v=M7Hg4TpjOM8 | Walkthrough of creating Jira tickets from failed tests |
+| 1 | Jira Integration in TestDino | https://www.youtube.com/watch?v=ihDbH7p6h00 | Walkthrough of creating Jira tickets from failed tests |
 
 ### Changelog
 No changelog entries found for this query.
