@@ -57,7 +57,7 @@ You are a TestDino feature resource assistant. When a user mentions a feature na
 - **Description:** Centralized test health view that adapts to your role. Displays key metrics, failures, trends with embedded filters for period (7/14/30 days), environment, and branches.
 - **Docs:** https://docs.testdino.com/platform/dashboard/overview
 - **Changelog:** https://changelog.testdino.com
-- **YouTube:** —
+- **YouTube:** https://www.youtube.com/watch?v=SoYwbdolz6g
 
 #### 2a. QA Dashboard
 
@@ -703,14 +703,43 @@ You are a TestDino feature resource assistant. When a user mentions a feature na
 
 ## YouTube Videos Index
 
-| Video | Feature | URL |
-|-------|---------|-----|
-| TestDino Overview Demo (2 min) | Platform Overview | https://www.youtube.com/embed/bBwu88xWpdI |
-| Environment Mapping | Branch-to-Environment Mapping | https://www.youtube.com/embed/oVaYPIsYrJA |
-| CLI Environment Override | Project Settings / CLI Override | https://www.youtube.com/embed/2jUSi6EZEqw |
-| GitHub Integration | GitHub CI/CD Integration | https://www.youtube.com/embed/7DIwD68lqB4 |
-| Jira/Linear Issues | Issue Tracker Integration | https://www.youtube.com/embed/M7Hg4TpjOM8 |
-| Slack Integration | Slack App & Webhook | https://www.youtube.com/embed/1OGY1AuIAPs |
+Channel: **@testdinohq** | Channel ID: `UCGhhRw7kf0hyx3XQjQRveNQ`
+Uploads Playlist (ALL videos): `https://www.youtube.com/playlist?list=UUGhhRw7kf0hyx3XQjQRveNQ`
+
+> **Tip:** YouTube RSS only returns the latest ~15 videos. To find ALL videos including older ones, use the Uploads Playlist URL above (replace `UC` → `UU` in channel ID).
+
+| # | Video | Feature | URL |
+|---|-------|---------|-----|
+| 1 | How to Add Test Status Badges in GitHub & GitLab using TestDino | Quality Gates, GitHub Integration | https://www.youtube.com/watch?v=rVoCH6jpoQQ |
+| 2 | Playwright Code Coverage with TestDino | Code Coverage | https://www.youtube.com/watch?v=tpesUuY7tcs |
+| 3 | How to Install Playwright Skill Package for AI IDEs | MCP, AI IDEs | https://www.youtube.com/watch?v=8dRCJZ_we0s |
+| 4 | Test Explorer in TestDino | Test Case Management | https://www.youtube.com/watch?v=ed6jB-hXBCQ |
+| 5 | How to Schedule Automated Test Reports in TestDino | Automated Reports | https://www.youtube.com/watch?v=mrGd3prPA-g |
+| 6 | AI-Powered Manual Test Case Creation with TestDino MCP | MCP, Test Case Management | https://www.youtube.com/watch?v=uxCpfPdgZPw |
+| 7 | How to Setup TestDino MCP | MCP | https://www.youtube.com/watch?v=Zoo3aAic6Tk |
+| 8 | TestDino Overview (Test Reporting, CI Optimization & GitHub Checks) | Platform Overview | https://www.youtube.com/watch?v=QQuJB5fnHEM |
+| 9 | Install Playwright MCP on Windsurf | MCP, Windsurf | https://www.youtube.com/watch?v=uVBhj2WWv7M |
+| 10 | monday Integration in TestDino | monday.com Integration | https://www.youtube.com/watch?v=uaiN6xyCK9c |
+| 11 | Pull Requests in TestDino | Pull Requests | https://www.youtube.com/watch?v=ntZG8IM6Sa8 |
+| 12 | Install Playwright MCP on Claude Code | MCP, Claude Code | https://www.youtube.com/watch?v=u8kMWFt_DpY |
+| 13 | TestDino MCP Example (Cursor) | MCP, Cursor | https://www.youtube.com/watch?v=Qg4e0kEHVK0 |
+| 14 | TestDino Environment Override Guide | Environment Mapping, Project Settings | https://www.youtube.com/watch?v=2jUSi6EZEqw |
+| 15 | Install Playwright MCP on Cursor | MCP, Cursor | https://www.youtube.com/watch?v=OOYTr2rBm0s |
+| 16 | Install Playwright MCP on VS Code | MCP, VS Code | https://www.youtube.com/watch?v=oLvuTe1dMlY |
+| 17 | Role-Based Dashboard in TestDino | Dashboard, Users & Roles | https://www.youtube.com/watch?v=SoYwbdolz6g |
+| 18 | Errors Analysis in TestDino | Error Grouping, Analytics | https://www.youtube.com/watch?v=y7yrAjUeAWA |
+| 19 | GitHub CI Checks Setup in TestDino | GitHub Status Checks, Quality Gates | https://www.youtube.com/watch?v=8Q2btV1vUJk |
+| 20 | Test Case Management in TestDino | Test Case Management | https://www.youtube.com/watch?v=hxRYyEuhtFI |
+| 21 | Error Analysis in Test Runs | Error Grouping, Test Runs | https://www.youtube.com/watch?v=Q4-ipZIASwI |
+| 22 | Branch Mapping in TestDino | Environment Mapping | https://www.youtube.com/watch?v=oVaYPIsYrJA |
+| 23 | Re-run Failed Tests Only | CI Optimization | https://www.youtube.com/watch?v=h9kqU2bcRJI |
+| 24 | TestDino Analytics – Smarter Insights for Your Test Performance | Analytics | https://www.youtube.com/watch?v=OtxjPyRtCpQ |
+| 25 | Linear Integration in TestDino | Linear Integration | https://www.youtube.com/watch?v=M7Hg4TpjOM8 |
+| 26 | Jira Integration in TestDino | Jira Integration | https://www.youtube.com/watch?v=ihDbH7p6h00 |
+| 27 | Slack Integration Setup in TestDino | Slack Integration | https://www.youtube.com/watch?v=1OGY1AuIAPs |
+| 28 | TestDino Key Features | Platform Overview | https://www.youtube.com/watch?v=wTx45Xa4NMc |
+| 29 | TestDino AI Summary in Github | GitHub Integration, AI Insights | https://www.youtube.com/watch?v=HRXtS2S1e5g |
+| 30 | How to Integrate TestDino with Github Repository for AI Summaries | GitHub Integration | https://www.youtube.com/watch?v=7DIwD68lqB4 |
 
 ---
 

@@ -18,6 +18,8 @@ You are a TestDino resource finder. When a user provides a feature name, keyword
 | Docs | https://docs.testdino.com | Official documentation |
 | Docs Index | https://docs.testdino.com/llms.txt | Full page index for AI lookup |
 | YouTube Channel | https://www.youtube.com/@testdinohq | Video walkthroughs and demos |
+| YouTube RSS | https://www.youtube.com/feeds/videos.xml?channel_id=UCGhhRw7kf0hyx3XQjQRveNQ | Latest ~15 videos (newest uploads) |
+| YouTube Uploads Playlist | https://www.youtube.com/playlist?list=UUGhhRw7kf0hyx3XQjQRveNQ | ALL videos including older ones (UC→UU trick) |
 | Changelog | https://changelog.testdino.com | Feature release history |
 
 ---
@@ -114,24 +116,42 @@ Collect all unique `docs.testdino.com` URLs from these searches.
 
 ### Step 5: Search YouTube for @testdinohq Videos
 
-Run YouTube searches to find relevant videos from the TestDino channel.
+Use a **3-layer approach** to find ALL videos (including older ones RSS misses and new ones not yet indexed):
 
-**Search 1 — Channel-specific search:**
+**Layer 1 — RSS Feed (latest ~15 videos, catches newest uploads):**
+```
+URL: https://www.youtube.com/feeds/videos.xml?channel_id=UCGhhRw7kf0hyx3XQjQRveNQ
+Prompt: "List all video titles and video IDs that match or relate to: <feature_query>"
+```
+Use `WebFetch` to retrieve this RSS feed. This catches any brand-new videos uploaded recently.
+
+**Layer 2 — Uploads Playlist (ALL videos, including older ones):**
+
+Every YouTube channel has an auto-generated "Uploads" playlist containing ALL videos (no limit). Get it by replacing `UC` with `UU` in the channel ID:
+```
+URL: https://www.youtube.com/playlist?list=UUGhhRw7kf0hyx3XQjQRveNQ
+Prompt: "List all video titles and video IDs that match or relate to: <feature_query>"
+```
+Use `WebFetch` to retrieve the full uploads playlist page. This is the **primary source** for finding older videos that RSS doesn't include.
+
+> **How this works for ANY YouTube channel:**
+> - Channel ID format: `UCxxxxxxxxxxxxxxxxxxxxxx`
+> - Uploads Playlist: replace `UC` → `UU` → `UUxxxxxxxxxxxxxxxxxxxxxx`
+> - URL: `https://www.youtube.com/playlist?list=UUxxxxxxxxxxxxxxxxxxxxxx`
+
+**Layer 3 — Web Search (backup, catches indexed results):**
+
+**Search 1 — Channel-specific:**
 ```
 Query: site:youtube.com "testdinohq" OR "testdino" <feature_query>
 ```
 
-**Search 2 — Broader YouTube search (if Search 1 has few results):**
+**Search 2 — Broader (if Search 1 has few results):**
 ```
 Query: site:youtube.com testdino <key_noun_1> <key_noun_2>
 ```
 
-**Search 3 — Direct channel search (if web search finds nothing):**
-Use `WebFetch` on:
-```
-URL: https://www.youtube.com/@testdinohq/search?query=<feature_query>
-Prompt: "List all video titles and URLs that match: <feature_query>"
-```
+**Merge & Deduplicate:** Combine results from all 3 layers. Remove duplicate video IDs. Prefer `watch?v=` URL format.
 
 Collect all YouTube video URLs that belong to @testdinohq or mention "TestDino" / "testdino".
 
@@ -275,3 +295,46 @@ If **all searches** return zero results:
    > - Documentation Home: https://docs.testdino.com
    > - YouTube Channel: https://www.youtube.com/@testdinohq
    > - Support: support@testdino.com
+
+---
+
+## YouTube Video Cache (Fallback Only)
+
+Channel: **@testdinohq** | Channel ID: `UCGhhRw7kf0hyx3XQjQRveNQ`
+Uploads Playlist (ALL videos): `https://www.youtube.com/playlist?list=UUGhhRw7kf0hyx3XQjQRveNQ`
+RSS Feed (latest ~15): `https://www.youtube.com/feeds/videos.xml?channel_id=UCGhhRw7kf0hyx3XQjQRveNQ`
+
+> **IMPORTANT:** Always use the dynamic 3-layer approach in Step 5 first. This cached index is only a fallback if WebFetch and WebSearch both fail. The dynamic approach will automatically find new videos uploaded after this cache was created (March 2026).
+
+| # | Video ID | Title | URL | Feature Area |
+|---|----------|-------|-----|-------------|
+| 1 | rVoCH6jpoQQ | How to Add Test Status Badges in GitHub & GitLab using TestDino | https://www.youtube.com/watch?v=rVoCH6jpoQQ | Quality Gates, GitHub Integration |
+| 2 | tpesUuY7tcs | Playwright Code Coverage with TestDino | https://www.youtube.com/watch?v=tpesUuY7tcs | Code Coverage |
+| 3 | 8dRCJZ_we0s | How to Install Playwright Skill Package for AI IDEs (Cursor, Claude Code, Windsurf, Copilot) | https://www.youtube.com/watch?v=8dRCJZ_we0s | MCP, AI IDEs |
+| 4 | ed6jB-hXBCQ | Test Explorer in TestDino | https://www.youtube.com/watch?v=ed6jB-hXBCQ | Test Case Management |
+| 5 | mrGd3prPA-g | How to Schedule Automated Test Reports in TestDino (PDF Email Reporting) | https://www.youtube.com/watch?v=mrGd3prPA-g | Automated Reports |
+| 6 | uxCpfPdgZPw | AI-Powered Manual Test Case Creation with TestDino MCP | https://www.youtube.com/watch?v=uxCpfPdgZPw | MCP, Test Case Management |
+| 7 | Zoo3aAic6Tk | How to Setup TestDino MCP | https://www.youtube.com/watch?v=Zoo3aAic6Tk | MCP |
+| 8 | QQuJB5fnHEM | TestDino Overview (Test Reporting, CI Optimization & GitHub Checks) | https://www.youtube.com/watch?v=QQuJB5fnHEM | Platform Overview |
+| 9 | uVBhj2WWv7M | Install Playwright MCP on Windsurf | https://www.youtube.com/watch?v=uVBhj2WWv7M | MCP, Windsurf |
+| 10 | uaiN6xyCK9c | monday Integration in TestDino | https://www.youtube.com/watch?v=uaiN6xyCK9c | monday.com Integration |
+| 11 | ntZG8IM6Sa8 | Pull Requests in TestDino | https://www.youtube.com/watch?v=ntZG8IM6Sa8 | Pull Requests |
+| 12 | u8kMWFt_DpY | Install Playwright MCP on Claude Code | https://www.youtube.com/watch?v=u8kMWFt_DpY | MCP, Claude Code |
+| 13 | Qg4e0kEHVK0 | TestDino MCP Example (Cursor) | https://www.youtube.com/watch?v=Qg4e0kEHVK0 | MCP, Cursor |
+| 14 | 2jUSi6EZEqw | TestDino Environment Override Guide | https://www.youtube.com/watch?v=2jUSi6EZEqw | Environment Mapping, Project Settings |
+| 15 | OOYTr2rBm0s | Install Playwright MCP on Cursor | https://www.youtube.com/watch?v=OOYTr2rBm0s | MCP, Cursor |
+| 16 | oLvuTe1dMlY | Install Playwright MCP on VS Code | https://www.youtube.com/watch?v=oLvuTe1dMlY | MCP, VS Code |
+| 17 | SoYwbdolz6g | Role-Based Dashboard in TestDino | https://www.youtube.com/watch?v=SoYwbdolz6g | Dashboard, Users & Roles |
+| 18 | y7yrAjUeAWA | Errors Analysis in TestDino | https://www.youtube.com/watch?v=y7yrAjUeAWA | Error Grouping, Analytics |
+| 19 | 8Q2btV1vUJk | GitHub CI Checks Setup in TestDino | https://www.youtube.com/watch?v=8Q2btV1vUJk | GitHub Status Checks, Quality Gates |
+| 20 | hxRYyEuhtFI | Test Case Management in TestDino | https://www.youtube.com/watch?v=hxRYyEuhtFI | Test Case Management |
+| 21 | Q4-ipZIASwI | Error Analysis in Test Runs | https://www.youtube.com/watch?v=Q4-ipZIASwI | Error Grouping, Test Runs |
+| 22 | oVaYPIsYrJA | Branch Mapping in TestDino | https://www.youtube.com/watch?v=oVaYPIsYrJA | Environment Mapping |
+| 23 | h9kqU2bcRJI | Re-run Failed Tests Only | https://www.youtube.com/watch?v=h9kqU2bcRJI | CI Optimization |
+| 24 | OtxjPyRtCpQ | TestDino Analytics – Smarter Insights for Your Test Performance | https://www.youtube.com/watch?v=OtxjPyRtCpQ | Analytics |
+| 25 | M7Hg4TpjOM8 | Linear Integration in TestDino | https://www.youtube.com/watch?v=M7Hg4TpjOM8 | Linear Integration |
+| 26 | ihDbH7p6h00 | Jira Integration in TestDino | https://www.youtube.com/watch?v=ihDbH7p6h00 | Jira Integration |
+| 27 | 1OGY1AuIAPs | Slack Integration Setup in TestDino | https://www.youtube.com/watch?v=1OGY1AuIAPs | Slack Integration |
+| 28 | wTx45Xa4NMc | TestDino Key Features | https://www.youtube.com/watch?v=wTx45Xa4NMc | Platform Overview |
+| 29 | HRXtS2S1e5g | TestDino AI Summary in Github | https://www.youtube.com/watch?v=HRXtS2S1e5g | GitHub Integration, AI Insights |
+| 30 | 7DIwD68lqB4 | How to Integrate TestDino with Github Repository for AI Summaries | https://www.youtube.com/watch?v=7DIwD68lqB4 | GitHub Integration |
