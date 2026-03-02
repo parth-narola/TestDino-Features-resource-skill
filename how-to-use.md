@@ -1,6 +1,6 @@
-# How to Use the TestDino Feature Resource Skill
+# How to Use the TestDino Resource Finder Skill
 
-This guide explains how anyone on your team can use the `testdino-features.md` skill file with Claude to instantly find TestDino feature resources — docs, changelog, and YouTube videos.
+This skill dynamically searches for TestDino documentation and YouTube videos based on any feature name or keyword you provide.
 
 ---
 
@@ -8,11 +8,11 @@ This guide explains how anyone on your team can use the `testdino-features.md` s
 
 ### Option A: Claude Code (CLI)
 
-1. Copy `testdino-features.md` into your project's `.claude/` directory or reference it in your `CLAUDE.md`:
+1. Copy `testdino-resource-finder-skill.md` into your project's `.claude/` directory or reference it in your `CLAUDE.md`:
 
 ```
 # In your CLAUDE.md, add:
-See .claude/testdino-features.md for TestDino feature resource lookup.
+See .claude/testdino-resource-finder-skill.md for TestDino resource lookup.
 ```
 
 2. Claude Code will automatically pick it up in every conversation within that project.
@@ -20,159 +20,107 @@ See .claude/testdino-features.md for TestDino feature resource lookup.
 ### Option B: Claude Desktop / claude.ai
 
 1. Start a new conversation.
-2. Attach `testdino-features.md` as a file, **or** paste its full contents at the start of the conversation.
+2. Attach `testdino-resource-finder-skill.md` as a file, **or** paste its full contents at the start of the conversation.
 3. Then ask your questions.
 
 ### Option C: Cursor / Any MCP-Compatible IDE
 
-1. Add `testdino-features.md` to your project root or `.cursor/` rules.
+1. Add `testdino-resource-finder-skill.md` to your project root or `.cursor/` rules.
 2. Reference it in your rules file so the AI always has context.
+
+---
+
+## How It Works
+
+Unlike a static mapping, this skill **actively searches** every time you ask:
+
+1. **Docs Index Lookup** — Fetches `https://docs.testdino.com/llms.txt` to find matching pages.
+2. **Web Search for Docs** — Searches `site:docs.testdino.com` for your query.
+3. **YouTube Search** — Searches YouTube for `@testdinohq` videos matching your query.
+4. **Changelog Search** — Searches `site:changelog.testdino.com` for release mentions.
+5. **Verification** — Every link is verified before being returned. No guessed URLs.
+
+This means you always get **up-to-date** results, including new pages or videos added after the skill was created.
 
 ---
 
 ## How to Ask Questions
 
-Once the skill file is loaded, just ask naturally. Here are example queries and what you'll get back:
+Just ask naturally. The skill will search and return structured results.
 
-### Find a feature by name
-
+### Find docs for a feature
 ```
-User: Tell me about flaky tests
+User: Find resources for flaky tests
 ```
+Returns: Docs links, YouTube videos, changelog entries, and related resources — all from live search.
 
-Returns: Feature name, description, docs link, changelog link, YouTube video (if any), and all sub-features.
-
-### Find a feature by keyword
-
+### Search by keyword
 ```
-User: How do I set up Slack notifications?
+User: Find resources for Slack notifications
 ```
+Returns: Slack App and Slack Webhook docs, setup guides, and the Slack integration YouTube video.
 
-Returns: Both Slack App (14i) and Slack Webhook (14j) features with their respective docs and the Slack YouTube video.
-
-### Get docs for a specific integration
-
+### Search for integrations
 ```
-User: Jira integration
+User: Find resources for Jira integration
 ```
+Returns: Jira docs page, integrations overview, Jira/Linear YouTube walkthrough.
 
-Returns: Jira integration description, docs link, changelog link, and YouTube video link.
-
-### Find YouTube videos for a feature
-
+### Search for CLI tools
 ```
-User: Are there any videos for environment mapping?
+User: Find resources for CLI upload
 ```
+Returns: Node.js CLI docs, Python CLI docs, upload command reference.
 
-Returns: The Environment Mapping YouTube video link + docs link.
-
-### Ask about multiple features at once
-
+### Search for any topic
 ```
-User: What resources are available for CI optimization and GitHub status checks?
+User: Find resources for code coverage
 ```
-
-Returns: Both features with all their resources listed separately.
-
-### Get sub-feature details
-
-```
-User: What tabs are available in test runs?
-```
-
-Returns: All 6 test run tabs (Summary, Specs & Tags, Errors, History, Configuration, Coverage) with individual docs links.
-
-### Ask about setup or CLI
-
-```
-User: How do I upload test results using the Node.js CLI?
-```
-
-Returns: Node.js CLI feature with commands, flags, and docs link.
-
-### Ask about pricing
-
-```
-User: What are the TestDino plans?
-```
-
-Returns: All 4 plans with pricing, limits, and docs link.
+Returns: Code coverage guide, analytics coverage, test run coverage tab, instrumentation docs.
 
 ---
 
-## Quick Reference: Keywords That Work
+## What You Get Back
 
-These keywords map directly to features. Use any of them:
+Every response includes these sections:
 
-| What You Want | Keywords to Use |
-|---|---|
-| Initial setup | `setup`, `install`, `getting started`, `onboarding` |
-| Dashboard views | `dashboard`, `qa view`, `developer view` |
-| Test execution results | `test runs`, `runs`, `executions` |
-| Failure analysis | `errors`, `error grouping`, `stack trace` |
-| AI-powered insights | `ai insights`, `why failing`, `ai categorization` |
-| Test case details | `test case`, `evidence`, `screenshots`, `trace` |
-| Pull request view | `pull request`, `pr`, `merge request` |
-| Analytics & trends | `analytics`, `metrics`, `trends`, `flakiness` |
-| Live results | `real-time`, `streaming`, `live`, `websocket` |
-| Flaky test detection | `flaky`, `intermittent`, `flaky test` |
-| Scheduled reports | `reports`, `pdf`, `email`, `automated reports` |
-| Branch mapping | `environment mapping`, `branch mapping` |
-| CI optimization | `rerun`, `rerun failed`, `cache`, `ci optimization` |
-| Quality gates | `quality gate`, `status check`, `ci check`, `block merge` |
-| GitHub integration | `github`, `github app`, `github actions` |
-| GitLab integration | `gitlab`, `merge request` |
-| Azure DevOps | `azure devops` |
-| TeamCity | `teamcity` |
-| Jira tickets | `jira`, `bug ticket` |
-| Linear issues | `linear` |
-| Slack alerts | `slack`, `slack app`, `notifications` |
-| AI agent access | `mcp`, `cursor`, `claude desktop`, `ai agent` |
-| Manual test management | `test management`, `manual testing`, `suites` |
-| Test annotations | `annotations`, `priority`, `owner`, `notify` |
-| Visual debugging | `screenshots`, `video`, `visual evidence` |
-| Trace debugging | `trace`, `trace viewer`, `dom snapshot` |
-| Visual regression | `visual testing`, `snapshot`, `screenshot diff` |
-| Code coverage | `code coverage`, `istanbul`, `coverage` |
-| CLI tools | `cli`, `nodejs`, `tdpw`, `python`, `pytest` |
-| Settings | `settings`, `project settings` |
-| User management | `users`, `roles`, `permissions`, `invite` |
-| Plans & billing | `billing`, `pricing`, `plans` |
-| Data privacy | `privacy`, `data`, `redaction`, `retention` |
-| API authentication | `api key`, `token`, `pat` |
-| Help | `faq`, `help`, `troubleshooting` |
+| Section | Count | Description |
+|---------|-------|-------------|
+| **Documentation** | 1-5 links | Primary docs, setup guides, related pages |
+| **YouTube Videos** | 0-3 links | Walkthroughs from @testdinohq channel only |
+| **Changelog** | 0-3 links | Feature release mentions |
+| **Related Resources** | 0-3 links | Contextual pages based on feature area |
 
----
-
-## Available YouTube Videos
-
-When a feature has a video, the skill returns it automatically. Here's the full list:
-
-| Video Topic | URL |
-|---|---|
-| TestDino Overview Demo (2 min) | https://www.youtube.com/embed/bBwu88xWpdI |
-| Environment Mapping | https://www.youtube.com/embed/oVaYPIsYrJA |
-| CLI Environment Override | https://www.youtube.com/embed/2jUSi6EZEqw |
-| GitHub Integration | https://www.youtube.com/embed/7DIwD68lqB4 |
-| Jira / Linear Issues | https://www.youtube.com/embed/M7Hg4TpjOM8 |
-| Slack Integration | https://www.youtube.com/embed/1OGY1AuIAPs |
+Each link includes: Title, URL, and a one-sentence relevance explanation.
 
 ---
 
 ## Tips
 
-- **Be specific:** "Slack App integration" gives a more precise result than just "Slack".
-- **Use feature names from the docs:** The skill file mirrors TestDino's official documentation structure.
-- **Ask follow-ups:** After getting a feature, you can ask "What are the sub-features?" or "Show me the CLI commands for this."
-- **Combine queries:** You can ask about multiple features in one message.
-- **The skill never guesses:** If a link doesn't exist for a feature, it says so instead of making one up.
+- **Be specific:** "Slack App integration" gives more precise results than just "Slack".
+- **Use feature names:** "GitHub status checks", "trace viewer", "environment mapping".
+- **Ask for multiple features:** You can ask about several features in one message.
+- **Results are live:** The skill searches the web each time, so new docs and videos are always included.
+- **No fake links:** If nothing is found, the skill tells you honestly instead of guessing URLs.
+
+---
+
+## Optional: Combine with Static Feature Mapping
+
+For the fastest results, you can use both files together:
+
+1. `testdino-features.md` — Static feature-to-resource mapping (instant, offline, comprehensive)
+2. `testdino-resource-finder-skill.md` — Dynamic search skill (live, always up-to-date)
+
+Load both in your Claude session for the best of both worlds. The static mapping gives instant answers for known features, while the dynamic skill catches anything new.
 
 ---
 
 ## Sharing With Your Team
 
-1. Share both files:
-   - `testdino-features.md` — the skill (feature-to-resource mapping)
+1. Share these files:
+   - `testdino-resource-finder-skill.md` — the dynamic search skill
+   - `testdino-features.md` — the static feature mapping (optional, for offline/fast lookup)
    - `how-to-use.md` — this guide
 2. Each team member loads the skill file in their Claude session (see Setup above).
-3. Done — everyone can look up any TestDino feature instantly.
+3. Done — everyone can search for any TestDino feature resource instantly.
